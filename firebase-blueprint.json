@@ -1,0 +1,428 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Private profile settings and generated alias for the user",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The Firebase Auth UID of the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address if authenticated via email/Google"
+        },
+        "alias": {
+          "type": "string",
+          "description": "Generated anonymous alias for public display",
+          "maxLength": 60
+        },
+        "avatarColor": {
+          "type": "string",
+          "description": "Hex or gradient color identifier",
+          "maxLength": 30
+        },
+        "avatarIcon": {
+          "type": "string",
+          "description": "Avatar icon name",
+          "maxLength": 40
+        },
+        "bio": {
+          "type": "string",
+          "description": "Short anonymous bio",
+          "maxLength": 200
+        },
+        "blockedUserIds": {
+          "type": "array",
+          "description": "List of user UIDs blocked by this user"
+        },
+        "sensitiveFilter": {
+          "type": "boolean",
+          "description": "Whether sensitive posts should be blurred by default"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "alias", "avatarColor", "avatarIcon", "createdAt", "updatedAt"]
+    },
+    "Confession": {
+      "title": "Confession",
+      "description": "An anonymous confession, secret, or story shared with the community",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "The UID of the user who posted the confession"
+        },
+        "authorAlias": {
+          "type": "string",
+          "description": "Public anonymous alias at time of posting",
+          "maxLength": 60
+        },
+        "authorAvatar": {
+          "type": "string",
+          "description": "Avatar icon/color representation",
+          "maxLength": 50
+        },
+        "title": {
+          "type": "string",
+          "description": "Optional title of the confession",
+          "maxLength": 120
+        },
+        "content": {
+          "type": "string",
+          "description": "Body of the confession",
+          "minLength": 5,
+          "maxLength": 3000
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the confession",
+          "maxLength": 40
+        },
+        "tags": {
+          "type": "array",
+          "description": "List of tags associated with confession"
+        },
+        "hasContentWarning": {
+          "type": "boolean",
+          "description": "Flag indicating sensitive content"
+        },
+        "warningReason": {
+          "type": "string",
+          "description": "Brief explanation for the warning label",
+          "maxLength": 80
+        },
+        "likesCount": {
+          "type": "number",
+          "description": "Cached total likes count"
+        },
+        "commentsCount": {
+          "type": "number",
+          "description": "Cached total comments count"
+        },
+        "bookmarksCount": {
+          "type": "number",
+          "description": "Cached total bookmarks count"
+        },
+        "viewsCount": {
+          "type": "number",
+          "description": "Total views count"
+        },
+        "status": {
+          "type": "string",
+          "description": "Publish status: published or archived",
+          "enum": ["published", "archived"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["authorId", "authorAlias", "content", "category", "likesCount", "commentsCount", "bookmarksCount", "status", "createdAt", "updatedAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "An anonymous response or nested reply on a confession",
+      "type": "object",
+      "properties": {
+        "confessionId": {
+          "type": "string",
+          "description": "ID of parent confession"
+        },
+        "authorId": {
+          "type": "string",
+          "description": "The UID of the commenter"
+        },
+        "authorAlias": {
+          "type": "string",
+          "description": "Public anonymous alias at time of comment",
+          "maxLength": 60
+        },
+        "authorAvatar": {
+          "type": "string",
+          "description": "Avatar representation",
+          "maxLength": 50
+        },
+        "content": {
+          "type": "string",
+          "description": "Comment text content",
+          "minLength": 1,
+          "maxLength": 1200
+        },
+        "parentId": {
+          "type": "string",
+          "description": "ID of parent comment if nested reply, or empty string if root",
+          "maxLength": 128
+        },
+        "parentAuthorAlias": {
+          "type": "string",
+          "description": "Alias of the user being replied to",
+          "maxLength": 60
+        },
+        "likesCount": {
+          "type": "number",
+          "description": "Cached count of likes on this comment"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["confessionId", "authorId", "authorAlias", "content", "likesCount", "createdAt", "updatedAt"]
+    },
+    "PostLike": {
+      "title": "Post Like",
+      "description": "Record of a user liking a confession",
+      "type": "object",
+      "properties": {
+        "confessionId": {
+          "type": "string",
+          "description": "Target confession ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User who liked"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the like"
+        }
+      },
+      "required": ["confessionId", "userId", "createdAt"]
+    },
+    "CommentLike": {
+      "title": "Comment Like",
+      "description": "Record of a user liking a comment",
+      "type": "object",
+      "properties": {
+        "commentId": {
+          "type": "string",
+          "description": "Target comment ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User who liked"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the like"
+        }
+      },
+      "required": ["commentId", "userId", "createdAt"]
+    },
+    "Bookmark": {
+      "title": "Bookmark",
+      "description": "Saved confession for later viewing",
+      "type": "object",
+      "properties": {
+        "confessionId": {
+          "type": "string",
+          "description": "Target confession ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User who bookmarked"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of bookmark"
+        }
+      },
+      "required": ["confessionId", "userId", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Alert triggered when interaction happens on user's confession or comment",
+      "type": "object",
+      "properties": {
+        "recipientId": {
+          "type": "string",
+          "description": "User UID who receives notification"
+        },
+        "senderAlias": {
+          "type": "string",
+          "description": "Sender anonymous alias",
+          "maxLength": 60
+        },
+        "senderAvatar": {
+          "type": "string",
+          "description": "Sender avatar identifier",
+          "maxLength": 50
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of event",
+          "enum": ["like", "comment", "reply", "system"]
+        },
+        "confessionId": {
+          "type": "string",
+          "description": "Related confession ID"
+        },
+        "commentId": {
+          "type": "string",
+          "description": "Related comment ID if applicable"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "Short excerpt preview",
+          "maxLength": 150
+        },
+        "read": {
+          "type": "boolean",
+          "description": "Read indicator"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Notification timestamp"
+        }
+      },
+      "required": ["recipientId", "senderAlias", "type", "confessionId", "snippet", "read", "createdAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Abuse or violation report submitted by a user",
+      "type": "object",
+      "properties": {
+        "reporterId": {
+          "type": "string",
+          "description": "User who submitted report"
+        },
+        "targetType": {
+          "type": "string",
+          "description": "Target entity type",
+          "enum": ["confession", "comment"]
+        },
+        "targetId": {
+          "type": "string",
+          "description": "ID of reported confession or comment"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Report category",
+          "maxLength": 100
+        },
+        "details": {
+          "type": "string",
+          "description": "Additional context provided by reporter",
+          "maxLength": 600
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the report",
+          "enum": ["pending", "reviewed", "dismissed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of report"
+        }
+      },
+      "required": ["reporterId", "targetType", "targetId", "reason", "status", "createdAt"]
+    },
+    "Draft": {
+      "title": "Draft",
+      "description": "Unpublished confession draft saved by user",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of draft owner"
+        },
+        "title": {
+          "type": "string",
+          "description": "Draft title",
+          "maxLength": 120
+        },
+        "content": {
+          "type": "string",
+          "description": "Draft body",
+          "maxLength": 3000
+        },
+        "category": {
+          "type": "string",
+          "description": "Draft category",
+          "maxLength": 40
+        },
+        "hasContentWarning": {
+          "type": "boolean",
+          "description": "Content warning status"
+        },
+        "warningReason": {
+          "type": "string",
+          "description": "Warning details",
+          "maxLength": 80
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last edit timestamp"
+        }
+      },
+      "required": ["userId", "content", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private user preferences, alias and security settings"
+    },
+    "/confessions/{confessionId}": {
+      "schema": "Confession",
+      "description": "Public anonymous confessions feed"
+    },
+    "/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Public anonymous comments and replies on confessions"
+    },
+    "/post_likes/{likeId}": {
+      "schema": "PostLike",
+      "description": "Likes on confessions keyed by confessionId_userId"
+    },
+    "/comment_likes/{likeId}": {
+      "schema": "CommentLike",
+      "description": "Likes on comments keyed by commentId_userId"
+    },
+    "/bookmarks/{bookmarkId}": {
+      "schema": "Bookmark",
+      "description": "User saved confessions keyed by userId_confessionId"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User activity alerts and interaction notices"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Safety violation reports submitted by community"
+    },
+    "/drafts/{draftId}": {
+      "schema": "Draft",
+      "description": "Private user confession drafts keyed by draftId"
+    }
+  }
+}

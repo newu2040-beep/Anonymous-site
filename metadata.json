@@ -1,0 +1,8 @@
+{
+  "name": "ANONYMOUSSITE",
+  "description": "A modern, secure anonymous confession social network. Share secrets, personal stories, regrets, and thoughts anonymously with Apple-inspired Liquid Glass design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

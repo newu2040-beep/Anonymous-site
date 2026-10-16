@@ -1,0 +1,93 @@
+import { CategoryId, CategoryInfo } from '../types';
+
+export const CATEGORIES: CategoryInfo[] = [
+  {
+    id: 'all',
+    label: 'All Confessions',
+    icon: 'sparkles',
+    description: 'Every untold story, raw thought, and shared secret across the community.',
+    color: 'text-violet-400',
+    gradient: 'from-violet-500/20 to-purple-500/20 border-violet-500/30',
+  },
+  {
+    id: 'secret',
+    label: 'Deep Secret',
+    icon: 'lock',
+    description: 'Things never uttered aloud to anyone in the real world.',
+    color: 'text-rose-400',
+    gradient: 'from-rose-500/20 to-red-500/20 border-rose-500/30',
+  },
+  {
+    id: 'love',
+    label: 'Love & Heartbreak',
+    icon: 'heart',
+    description: 'Crushes, silent yearnings, bitter goodbyes, and forbidden feelings.',
+    color: 'text-pink-400',
+    gradient: 'from-pink-500/20 to-rose-500/20 border-pink-500/30',
+  },
+  {
+    id: 'thoughts',
+    label: 'Late Night Thoughts',
+    icon: 'moon',
+    description: 'Existential wonderings when the 3:00 AM silence sets in.',
+    color: 'text-indigo-400',
+    gradient: 'from-indigo-500/20 to-blue-500/20 border-indigo-500/30',
+  },
+  {
+    id: 'regret',
+    label: 'Unspoken Regrets',
+    icon: 'clock',
+    description: 'Words left unsaid, choices we wish we could undo.',
+    color: 'text-amber-400',
+    gradient: 'from-amber-500/20 to-orange-500/20 border-amber-500/30',
+  },
+  {
+    id: 'work',
+    label: 'Work & Career',
+    icon: 'briefcase',
+    description: 'Corporate absurdities, burnout confessions, and workplace drama.',
+    color: 'text-cyan-400',
+    gradient: 'from-cyan-500/20 to-sky-500/20 border-cyan-500/30',
+  },
+  {
+    id: 'wild',
+    label: 'Wild & Unbelievable',
+    icon: 'zap',
+    description: 'Crazy situations that happen only once in a lifetime.',
+    color: 'text-emerald-400',
+    gradient: 'from-emerald-500/20 to-teal-500/20 border-emerald-500/30',
+  },
+  {
+    id: 'advice',
+    label: 'Seeking Guidance',
+    icon: 'compass',
+    description: 'Honest questions and moral dilemmas from anonymous peers.',
+    color: 'text-sky-400',
+    gradient: 'from-sky-500/20 to-indigo-500/20 border-sky-500/30',
+  },
+  {
+    id: 'guilt',
+    label: 'Confession of Guilt',
+    icon: 'shield-alert',
+    description: 'Unburdening the soul from mistakes that linger on conscience.',
+    color: 'text-fuchsia-400',
+    gradient: 'from-fuchsia-500/20 to-purple-500/20 border-fuchsia-500/30',
+  },
+  {
+    id: 'wholesome',
+    label: 'Wholesome & Pure',
+    icon: 'smile',
+    description: 'Quiet acts of kindness, anonymous gratitude, and heartwarming moments.',
+    color: 'text-teal-400',
+    gradient: 'from-teal-500/20 to-emerald-500/20 border-teal-500/30',
+  },
+];
+
+export const REPORT_REASONS = [
+  'Contains personally identifiable information (doxxing / phone / real name)',
+  'Harassment, hate speech, or targeted bullying',
+  'Explicit threats of violence or harm',
+  'Commercial spam or advertising',
+  'Non-consensual imagery or illegal activity',
+  'Self-harm or suicide content (needs urgent helpline referral)',
+];
